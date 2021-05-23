@@ -24,7 +24,7 @@ module.exports = ({ development }) => ({
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: 'assets/[hash][ext]',
+    assetModuleFilename: 'assets/[name][ext]',
   },
   module: {
     rules: [
@@ -60,6 +60,7 @@ module.exports = ({ development }) => ({
     new CopyPlugin({
       patterns: [
         { from: 'public' },
+        {from:'src/assets',to:'assets'}
       ],
     }),
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),

@@ -1,0 +1,11 @@
+.cards__board{
+  width:400px;
+  height:400px;
+  margin: 0 auto;
+  display:grid;
+  grid-template-columns: 30% 30% 30%;
+  align-items: center;
+  justify-items: center;
+  column-gap: 5%;
+  row-gap: 5%;
+}

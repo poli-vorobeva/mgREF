@@ -1,0 +1,9 @@
+$footerColor: gray;
+.footer{
+  background-color: $footerColor;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5vh;
+}

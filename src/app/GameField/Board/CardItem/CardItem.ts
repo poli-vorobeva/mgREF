@@ -1,5 +1,6 @@
 import './CardItem.scss'
 import {__} from "../../../HelperUtil/HelperUtil";
+import {control} from "../../../Controllers/Controller";
 
 
 export class CardItem {
@@ -22,6 +23,9 @@ export class CardItem {
 
   getRandom() {
     const random = Math.floor(Math.random() * this.images.length)
+
+    control.getAllCardNumbers(random)
+
     return <number>random
   }
 }

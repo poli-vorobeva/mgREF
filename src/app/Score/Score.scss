@@ -1,0 +1,29 @@
+.score__item{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  h4,
+  p{margin: 0;}
+
+}
+.score__wrapper{
+  h3{
+      text-align: center;
+  }
+}
+.score__subWrapper{
+    width: 300px;
+
+}
+.score__avatar{
+  width: 30px;
+  height: 30px;
+  background: navy;
+  border-radius: 50%;
+}
+.score__score{
+  width: 50px;
+}

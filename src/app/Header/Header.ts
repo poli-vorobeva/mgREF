@@ -1,5 +1,7 @@
 import './Header.scss'
 import {__} from "../HelperUtil/HelperUtil";
+import {rout} from "../Router/Router";
+import set = Reflect.set;
 
 window.onpopstate=()=>{
   console.log(location.hash)
@@ -39,12 +41,12 @@ export class Header{
   }
   drawRegisterButton():HTMLElement{
     const buttonText = __.create('span').text('Register New Player').end()
-    const button = __.create('button').append(buttonText).end()
+    const button = __.create('button',['button__register','register']).append(buttonText).end()
     return <HTMLElement>button
   }
   drawMatchButton():HTMLElement|null{
     const buttonContent = __.create('span').text('Match Game').end()
-    const button =__.create('button').append(buttonContent).end()
+    const button =__.create('button',['button__game','game']).append(buttonContent).end()
     return button
   }
   drawNav():HTMLElement{
@@ -58,6 +60,7 @@ export class Header{
       const li= __.create('li',[`nav__item`,clsN]).append(svg).append(p).end()
       ul.append(li)
     }
+   setTimeout(()=>rout.subscribe(),0)
    return <HTMLElement>ul.end()
   }
   init():HTMLElement{
@@ -66,6 +69,7 @@ export class Header{
                   .append(this.drawMatchButton())
                   .append(nav)
                   .append(this.drawRegisterButton()).end()
+    rout.setListeners(<HTMLElement>header)
     return <HTMLElement>header
 }
 }

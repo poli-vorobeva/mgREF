@@ -1,5 +1,5 @@
 class HelperUtil {
-  el: HTMLElement | null;
+  el: HTMLElement|null;
 
   constructor(selector: HTMLElement | string | null) {
     this.el = typeof selector === 'string'
@@ -14,24 +14,24 @@ class HelperUtil {
     } else if (name && !value) {
       return this.el?.getAttribute(name);
     }
-    // return this
   }
 
   append(child: HTMLElement | null | string | undefined) {
-    // @ts-ignore
-    this.el?.appendChild(child);
+    this.el?.appendChild(child as Node);
     return this;
   }
 
   text(txt: string) {
-    // @ts-ignore
-    this.el?.textContent = txt;
+    if(this.el){
+      this.el.textContent = txt;
+    }
     return this;
   }
 
   html(html: string) {
-    // @ts-ignore
-    this.el?.innerHTML = html;
+   if(this.el){
+     this.el.innerHTML = html;
+   }
     return this;
   }
 

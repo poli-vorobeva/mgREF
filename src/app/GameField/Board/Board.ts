@@ -2,10 +2,9 @@ import './Board.scss'
 //import exports from "webpack";
 //import compareNumbers = exports.util.comparators.compareNumbers;
 import {CardItem} from "./CardItem/CardItem";
-import {Controller} from "../Controller";
 import {__} from "../../HelperUtil/HelperUtil";
+import {control} from "../../Controllers/Controller";
 
-const control = new Controller()
 
 export class Board {
   rows: number
@@ -35,7 +34,7 @@ export class Board {
         cards.append(cardWrapper)
       }
     }
-
+    const getPairsOnBoard = control.getAllOverlaps()
     return <HTMLElement>cards.end()
   }
 

@@ -5,7 +5,8 @@ export class Timer{
   minutes:string
   seconds:string
   check:Function
-
+  timerContainerClass: string
+  interval:Object|undefined
   constructor() {
     this.hour = '00'
     this.minutes = '00'
@@ -23,6 +24,8 @@ export class Timer{
       }
       return num
     }
+    this.timerContainerClass='.timer__string'
+    this.interval
   }
   hr(){
     const num=this.check(this.hour)
@@ -41,16 +44,24 @@ export class Timer{
     number=='00' && this.min()
     this.seconds=this.check(this.seconds)
   }
-  start(){
-    setInterval(()=>{
+  startTimer(){
+   this.interval=setInterval(()=>{
       this.sec()
-      return this.init()
-     // console.log(this.hour,this.minutes,this.seconds)
+      const el=document.querySelector(this.timerContainerClass) as HTMLElement
+      el.innerText=`${this.hour}:${this.minutes}:${this.seconds}`
     },1000)
   }
+  stopTimer(){
+    clearInterval(<NodeJS.Timeout>this.interval)
+  }
   init():HTMLElement{
+    // setInterval(()=>{
+    //   this.sec()
+    //   return this.init()
+    // },1000)
     const hourString=__.create('div','timer__string').text(`${this.hour}.${this.minutes}.${this.seconds}`).end()
     const timer= __.create('div','timer').append(hourString).end()
     return <HTMLElement>timer
   }
 }
+export const timer= new Timer()

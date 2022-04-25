@@ -1,17 +1,19 @@
 $headerColor: #1dcaea;
 $headerText: white;
-.header{
+.header {
   position: relative;
   width: 100%;
-  background-color: $headerColor;
-  color:$headerText;
+  background: rgb(178,9,238);
+  background: linear-gradient(146deg, rgba(178,9,238,0) 0%, rgba(49,0,228,0.6811099439775911) 36%);
+  color: $headerText;
   height: 10vh;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-flow: row nowrap;
   box-shadow: 0 3px 15px rgba(37, 45, 95, 0.5);
-  button{
+z-index: 10;
+  button {
     border: none;
     cursor: pointer;
     background-color: $headerText;
@@ -21,62 +23,114 @@ $headerText: white;
   }
 }
 
-.nav__items{
+.nav__items {
   margin: 0;
   width: 30%;
   display: flex;
   flex-flow: row nowrap;
   list-style: none;
+  align-items: center;
   justify-content: space-between;
   height: 100%;
 }
-.nav__item{
-  margin-top: 4%;
+
+.nav__item {
+  position: relative;
   cursor: pointer;
-  height: 100%;
   width: 30%;
   display: flex;
   flex-flow: column nowrap;
+  align-items: center;
   transition: all ease-in 500ms;
-p{
-  display: block;
-  margin: 0 auto;
+line-height: 2em;
+  p {
+    display: block;
+    margin: 0 auto;
+  }
 }
+.nav__item:before{
+  content:'';
+  position:absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border-top: 2px solid white;
+  border-left:2px solid white;
+  transition: width 500ms ease 500ms,height ease 500ms;
 
 }
-.settings{
-  span{
-    svg{
+.nav__item:hover:before,.nav__item:hover:after{
+  width:0;
+  height: 100%;
+}
+.nav__item:after{
+  content:'';
+  position:absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 0;
+  border-bottom: 2px solid white;
+  border-right:2px solid white;
+  transition: width  500ms ease 500ms,height ease 500ms;
+ }
+.nav__title{
+  text-transform: capitalize;
+}
+.settings {
+  span {
+    svg {
       margin-left: 2px;
       margin-top: 2px;
-      path{
-        fill:$headerColor;
-      }
-    }
-  }
- }
-.score{
-  span{
 
-    background-color: $headerColor;
-  }
-}
-.info span svg{
-      margin-left: 6px;
-      margin-top: 3px;
-      path{
+      path {
         fill: $headerColor;
       }
     }
-
-
-.nav__item:hover{
-  background-color: #02b6ea;
+  }
 }
-.nav__item_svg{
+
+.score {
+  span {
+    border-radius: 50%;
+    background-color: $headerColor;
+  }
+}
+
+.info span svg {
+  margin-left: 6px;
+  margin-top: 3px;
+
+  path {
+    fill: $headerColor;
+  }
+}
+
+.nav__item:hover {
+  background-color: #02b6ea;
+  cursor: pointer;
+}
+.button__game {
+  position: relative;
+  //top: -500px;
+}
+.header__avatar {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.nav__item_svg {
   width: 20px;
   height: 20px;
   margin: 0 auto;
   border-radius: 50%;
   background: white;
+}
+
+.nav__active {
+  background: #41bbf0;
 }

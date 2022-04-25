@@ -1,5 +1,5 @@
 $gameFieldColor: #dacfcf;
-.main{
+.main {
   background-color: $gameFieldColor;
   height: 90vh;
   min-height: 500px;
@@ -7,4 +7,23 @@ $gameFieldColor: #dacfcf;
   display: flex;
   align-items: center;
   margin: 0 auto;
+  overflow: hidden;
+}
+
+.game__wrapper {
+  width: 100vw;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.button__stop {
+  position: absolute;
+  top: 100px;
+  width: 100px;
+  right: 2px;
+  height: 50px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  cursor: pointer;
 }

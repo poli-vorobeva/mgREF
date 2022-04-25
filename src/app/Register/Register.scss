@@ -1,7 +1,7 @@
-$buttonBG:white;
-$buttonColor:#1dcaea;
+$buttonBG: white;
+$buttonColor: #1dcaea;
 
-.register__wrapper{
+.register__wrapper {
   display: flex;
   flex-flow: row nowrap;
   background: white;
@@ -11,28 +11,30 @@ $buttonColor:#1dcaea;
   position: relative;
 
   justify-content: space-evenly;
-  top: 100px;
   margin: 0 auto;
-  /* border: 1px solid gray; */
   box-shadow: 1px 2px 5px rgb(0, 0, 0, 0.4);
 }
-.submit__wrapper{
+
+.submit__wrapper {
   display: flex;
   flex-flow: column nowrap;
   height: 95%;
   justify-content: space-evenly;
   align-items: center;
   width: 40%;
-  img{
+
+  img {
     cursor: pointer;
   }
 }
-.register__buttons-wrapper{
+
+.register__buttons-wrapper {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 85%;
-  button{
+
+  button {
     width: 75px;
     height: 30px;
     cursor: pointer;
@@ -40,22 +42,94 @@ $buttonColor:#1dcaea;
     border: none;
     color: $buttonColor;
     border-radius: 5px;
-    box-shadow: 1px 1px 5px rgba(0,0,0,.2);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
     transition: all ease 500ms;
   }
-  button:hover{
+
+  button:hover {
     background: $buttonColor;
     color: $buttonBG;
   }
 }
-.register__avatar{
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  border-radius: 50%;
+}
+.avatar__img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+}
+.register__avatar {
   width: 85%;
   height: 70%;
- img{
-   width: 100%;
- }
+  position: relative;
+  img {
+    width: 100%;
+  }
+  .register__load-input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  //div {
+  //  position: absolute;
+  //  top: 0;
+  //  cursor: pointer;
+  //  width: 100%;
+  //  height: 100%;
+  //  text-align: center;
+  //  display: none;
+  //  align-items: center;
+  //  justify-content: center;
+  //  color: white;
+  //  font-size: 5rem;
+  //  border-radius: 50%;
+  //  background: rgba(0, 0, 0, 0.2);
+  //  //opacity: 0;
+  //  transition: all ease-out 500ms;
+  //}
+  .plus{
+    width: 100%;
+    height: 100%;
+    background: green;
+    position: absolute;
+    top: 0;
+    left: 0;
+      font-size: 5rem;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2);
+      //opacity: 0;
+      transition: all ease-out 500ms;
+      text-align: center;
+      //display: none;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    span{
+      display: block;
+      position: relative;
+      top: 20px;
+    }
+  }
 }
-.register__fieldset{
+.register__form {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.register__fieldset {
   display: flex;
   flex-flow: row nowrap;
   width: 60%;
@@ -66,25 +140,50 @@ $buttonColor:#1dcaea;
   border: none;
   background: #e4e0e0;
   margin-bottom: 10px;
-  box-shadow: 1px 2px 9px rgb(0, 0, 0, .3);
-  div{
+  box-shadow: 1px 2px 9px rgb(0, 0, 0, 0.3);
+
+  div {
     height: 50px;
-    p{
+
+    p {
       margin: 5px auto;
       font-size: 0.6rem;
       color: gray;
     }
   }
 }
-.register__input{
+
+.register__input {
   border: none;
   background: transparent;
   outline: none;
 }
-.register__checkbox{
+
+.register__checkbox {
   display: block;
   width: 15px;
   position: relative;
   outline: none;
   top: 25px;
+}
+
+.red {
+  background: rgba(251, 73, 73, 0.82);
+}
+
+.green {
+  background: #a4d06e;
+}
+
+.register__error {
+  position: absolute;
+  top: 100px;
+  background: #db2626;
+  border-radius: 3px;
+  height: 30px;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  color: white;
 }

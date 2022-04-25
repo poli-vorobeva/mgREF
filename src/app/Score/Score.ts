@@ -1,53 +1,36 @@
-import {__} from "../HelperUtil/HelperUtil";
-import './Score.scss'
+import './Score.scss';
+import {storage} from '../Storage/Storage';
+import {IHelper, IScore} from '../interfaces';
+import Control from "../controll";
 
-export class Score{
-  scoreData:object []
+export class Score extends Control implements IScore {
+  parent: HTMLElement | undefined;
 
-  constructor(){
-    this.scoreData=[
-      {
-        name:'Jhon',
-        email:"jhon@ngail.com",
-        score:'430',
-        time:'01:04:00',
-        photo:''
-      },
-      {
-        name:'Mary',
-        email:"mary@ngail.com",
-        score:250,
-        time:'00:03:00',
-        photo:''
-      },
-      {
-        name:'Bill',
-        email:"bill@ngail.com",
-        score:50,
-        time:'02:00:03',
-        photo:''
-      }
-      ]
+  constructor(parentNode: HTMLElement) {
+    super(parentNode)
+    this.parent = undefined;
+    this.render()
   }
-  drawScoreContent(){
-    const div= __.create('section','score__content')
-    this.scoreData.forEach(man=>{
-      const e=JSON.parse(JSON.stringify(man))
-      console.log(e.name)
-      const avatar=__.create('div','score__avatar').text(e.photo).end()
-      const name=__.create('h4','score__name').text(e.name).end()
-      const email=__.create('p','score__email').text(e.email).end()
-      const divW=__.create('div','score__subWrapper').append(name).append(email).end()
-      const score=__.create('div','score__score').text(e.score).end()
-      const divM= __.create('div','score__item').append(avatar).append(divW).append(score).end()
-      div.append(divM)
-    })
-    return div.end()
+
+  async drawScoreContent(parent: HTMLElement) {
+    const storageData = await storage.getResults();
+    const sortedData = storageData.sort((a, b) => a.score - b.score);
+    const div = new Control(parent, 'section', 'score__content');
+    sortedData.forEach((man) => {
+      const divM = new Control(div.node, 'div', 'score__item')
+      const e = JSON.parse(JSON.stringify(man));
+      const avatar = new Control(divM.node, 'div', 'score__avatar')
+      const img = new Control(avatar.node, 'img')
+      img.node.setAttribute('src', e.user.photo);
+      const divW = new Control(divM.node, 'div', 'score__subWrapper')
+      const name = new Control(divW.node, 'h4', 'score__name', e.user.firstName)
+      const score = new Control(divM.node, 'div', 'score__score', `${e.score}`)
+    });
   }
-  init(){
-    const h3= __.create('h3','score__h3').text('Score').end()
-    const scoreTable = this.drawScoreContent()
-    const wrapper=__.create('div','score__wrapper').append(h3).append(scoreTable).end()
-    return wrapper
+
+  async render(): Promise<void> {
+    const wrapper = new Control(this.node, 'div', 'score__wrapper')
+    const h3 = new Control(wrapper.node, 'h3', 'score__h3', 'Score')
+    await this.drawScoreContent(wrapper.node);
   }
 }

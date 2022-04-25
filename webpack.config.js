@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
+//const ESLintPlugin = require('eslint-webpack-plugin');
 
 const devServer = (isDev) => !isDev ? {} : {
   devServer: {
@@ -13,7 +13,7 @@ const devServer = (isDev) => !isDev ? {} : {
   },
 };
 
-const esLintPlugin = (isDev) => isDev ? [] : [ new ESLintPlugin({ extensions: ['ts', 'js'] }) ];
+//const esLintPlugin = (isDev) => isDev ? [] : [ new ESLintPlugin({ extensions: ['ts', 'js'] }) ];
 
 module.exports = ({ development }) => ({
   mode: development ? 'development' : 'production',
@@ -52,7 +52,7 @@ module.exports = ({ development }) => ({
     ],
   },
   plugins: [
-    ...esLintPlugin(development),
+   // ...esLintPlugin(development),
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     new HtmlWebpackPlugin({
       template: './src/index.html'

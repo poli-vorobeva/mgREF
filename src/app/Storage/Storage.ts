@@ -1,8 +1,13 @@
-
-//import { GameResult, GameStorage } from "../types";
+function waitResult(request: IDBRequest) {
+  return new Promise((res, rej) => {
+    request.onsuccess = res;
+    request.onerror = rej;
+  });
+}
 export interface User {
   photo: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
 }
 
@@ -15,33 +20,75 @@ export interface GameStorage {
   getResults: () => Promise<GameResult[]>;
   saveResult: (result: GameResult) => Promise<void>;
 }
-
+function getTableName() {
+  return 'score';
+}
 export class IdbStorage implements GameStorage {
-  constructor(private databaseName: string) {}
+  sortResults:
+  | {
+    user: {
+      photo: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+    score: number;
+  }[]
+  | undefined;
 
-  getResults() {
-    return this.performQuery<GameResult[]>((store) => {
-      return store.getAll().result;
+  constructor(private databaseName: string) {
+    this.sortResults = undefined;
+  }
+
+  getSortResults(): {
+    user: {
+      photo: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+    score: number;
+  }[] {
+    return this.sortResults as {
+      user: {
+        photo: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+      };
+      score: number;
+    }[];
+  }
+
+  getResults(): Promise<GameResult[]> {
+    const res: GameResult[] | undefined = this.sortResults;
+    return this.performQuery<GameResult[]>(async (store) => {
+      const request: IDBRequest = store.getAll();
+      const scoresArr: number[] = [];
+      await waitResult(request);
+      return request.result;
     });
   }
 
-  saveResult(result: GameResult) {
+  saveResult(result: GameResult): Promise<void> {
     return this.performQuery((store) => {
       store.add(result, result.score);
     });
   }
 
-  private async performQuery<T>(executeQuery: (transaction: IDBObjectStore) => T) {
+  private async performQuery<T>(
+    executeQuery: (transaction: IDBObjectStore) => Promise<T> | T,
+  ) {
     const connection = await this.connect();
     const database = connection.result;
 
-    const tableName = this.getTableName();
+    const tableName = getTableName();
 
     let result: T;
     try {
-      const transaction = database.transaction(tableName, "readwrite");
+      const transaction = database.transaction(tableName, 'readwrite');
       const objectStore = transaction.objectStore(tableName);
-      result = executeQuery(objectStore);
+      result = await executeQuery(objectStore);
       await new Promise((resolve, reject) => {
         transaction.oncomplete = resolve;
         transaction.onerror = reject;
@@ -56,13 +103,13 @@ export class IdbStorage implements GameStorage {
   private async connect() {
     const connection = indexedDB.open(this.databaseName);
     connection.onupgradeneeded = () => {
-      const tableName = this.getTableName();
+      const tableName = getTableName();
       const database = connection.result;
 
       if (!database.objectStoreNames.contains(tableName)) {
         database.createObjectStore(tableName);
       }
-    }
+    };
     await new Promise((resolve, reject) => {
       connection.onsuccess = resolve;
       connection.onerror = reject;
@@ -70,8 +117,5 @@ export class IdbStorage implements GameStorage {
 
     return connection;
   }
-
-  private getTableName() {
-    return "score";
-  }
 }
+export const storage = new IdbStorage('poli8512');

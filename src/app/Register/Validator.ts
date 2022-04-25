@@ -1,27 +1,30 @@
-import {__} from "../HelperUtil/HelperUtil";
+import {IRegister, IValidator} from '../interfaces';
+import {observer} from '../Observer';
+import {hashEl} from '../Hash';
+import {LocalStorage} from '../LocalStorage';
 
-class Validator{
-  init(elements:HTMLElement[]){
-    console.log('Validator')
-    elements.forEach(element=>{
-      console.log(element)
-      element.addEventListener('change',this.checkValid)
-    })
+export class Validator implements IValidator {
+  emailPattern: RegExp;
+  textPattern: RegExp;
+  firstName: string | undefined;
 
+  lastName: string | undefined;
+
+  email: string | undefined;
+
+  constructor() {
+    this.textPattern = /[123456789~!@#$%*()_—+=|:;"'`<>,.?]/i;
+    this.emailPattern = /[^123456789~!@#$%*()_—+=|:;"'`<>,.?]+@[^123456789~!@#$%*()_—+=|:;"'`<>,.?]+\.[^123456789~!@#$%*()_—+=|:;\"'`<>,.?]{1,5}/i;
   }
-  checkValid(e: Event){
-    let ev=<HTMLInputElement>e.target
-    console.log(ev.value)
-    console.log(ev.type)
-   // let reg = /[^~ ! @ # $ % * () _ — + = | : ; " ' ` < > , . ? / ^]/
 
+  validateField(input: HTMLInputElement) {
+    if (input.value.trim().length === 0) return true
+    if (input.type === 'text') {
+      return !input.value.match(this.textPattern)
+    } else if (input.type === 'email') {
+      return !!input.value.match(this.emailPattern)
+    }else{
+      return true
+    }
   }
-
-
 }
-class ValidateListeners{
-
-}
-const validListen= new ValidateListeners()
-export const validator= new Validator()
-

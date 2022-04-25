@@ -1,38 +1,47 @@
-.info__wrapper{
+@import "../textStyle.scss";
+.info__wrapper {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-evenly;
   width: 90vw;
   height: 85vh;
   margin: 0 auto;
-  background: #d3e2e2;
-  h6{
+  background: rgb(49,0,228);
+  background: linear-gradient(167deg, rgba(49,0,228,0.31416316526610644) 0%,
+    rgba(244, 76, 219, 0) 63%, rgba(49,0,228,0.2777485994397759) 100%);
+
+  h6 {
     text-align: center;
     font-size: 1.5rem;
     margin: 15px;
   }
 }
-.info__items__wrapper{
+
+.info__items__wrapper {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   height: 90%;
   margin: 20px 15px;
 }
-.info__item-el{
+
+.info__item-el {
   width: 35%;
   position: relative;
-  div{
+
+  div {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
   }
-  img{
+
+  img {
     height: 100%;
     position: absolute;
     right: 0;
   }
-  button{
+
+  button {
     position: absolute;
     right: 0;
     margin: 10px;
@@ -42,18 +51,21 @@
     border-radius: 3px;
     box-shadow: 1px 2px 3px #5c5e6569;
     color: white;
-    svg{
+
+    svg {
       position: relative;
       top: 2px;
     }
   }
-  .nav__item_svg{
+
+  .nav__item_svg {
     width: 20px;
     height: 20px;
     margin-left: 25px;
     border-radius: 50%;
     background-color: #fff;
   }
+
   span {
     display: block;
     position: relative;
@@ -64,7 +76,8 @@
     color: white;
   }
 }
-.info__item-descrEl{
+
+.info__item-descrEl {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -72,9 +85,26 @@
   border-radius: 50%;
   background: #1dcaea;
 }
-.info__item{
+
+.info__item {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
   height: 30%;
+}
+.info__register{
+  transform: translateX(-500px);
+  opacity: 0;
+  transition: all ease-out 1000ms;
+}
+.info__settings{
+  transform: translateX(500px);
+  opacity: 0;
+  transition: all ease-out 1500ms;
+}
+.info__game{
+  transform: translateX(-500px);
+  opacity: 0;
+  transition: all ease-out 2000ms;
+
 }

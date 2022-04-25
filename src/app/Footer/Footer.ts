@@ -1,9 +1,13 @@
-import './Footer.scss';
-import {__} from "../HelperUtil/HelperUtil";
+/*import './Footer.scss';
 
-export class Footer {
+interface IFooter {
+  init(): HTMLElement;
+}
+
+export class Footer implements IFooter {
   init() {
-    const footer = __.create('footer', 'footer').text('Footer').end()
-    return <HTMLElement>footer
+    /*const footer:HTMLElement = f.create('footer', 'footer').text('Footer').end();
+    return <HTMLElement>footer;
   }
 }
+*/

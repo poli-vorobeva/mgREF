@@ -1,4 +1,4 @@
-.score__item{
+.score__item {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -6,24 +6,31 @@
   justify-content: space-around;
   margin-bottom: 20px;
   h4,
-  p{margin: 0;}
-
-}
-.score__wrapper{
-  h3{
-      text-align: center;
+  p {
+    margin: 0;
   }
 }
-.score__subWrapper{
-    width: 300px;
-
+.score__wrapper {
+  width: 100%;
+  height: 80%;
+  h3 {
+    text-align: center;
+  }
 }
-.score__avatar{
+.score__subWrapper {
+  width: 300px;
+}
+.score__avatar {
   width: 30px;
   height: 30px;
   background: navy;
   border-radius: 50%;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
-.score__score{
+.score__score {
   width: 50px;
 }

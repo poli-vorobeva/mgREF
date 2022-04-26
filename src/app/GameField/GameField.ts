@@ -10,6 +10,7 @@ export class GameField extends Control implements IGameField {
   currentDifficulty: number;
   currentStyle: string;
   onGameComplete: () => void
+  private board: Board;
   constructor(parentNode: HTMLElement, settings: Record<string, string>) {
     super(parentNode)
     this.difficulty = {
@@ -20,19 +21,23 @@ export class GameField extends Control implements IGameField {
     this.currentDifficulty = this.difficulty[settings.difficulty];
     this.currentStyle = settings.cardStyle;
     const gameWrapper = new Control(this.node, 'section', 'game__wrapper')
-    const board = new Board(gameWrapper.node, this.currentStyle, this.currentDifficulty, settings.difficulty)
-    board.onGameComplete = () => {
+    this.board = new Board(gameWrapper.node, this.currentStyle, this.currentDifficulty, settings.difficulty)
+this.board.onGameComplete = () => {
+      const time=timer.stopTimer()
+this.board.gameTime(time)
       this.onGameComplete()
     }
     const timer = new Timer(gameWrapper.node)
-    board.onStartTimer = () => {
+this.board.onStartTimer = () => {
       timer.startTimer()
     }
   }
   setDifficult(difficult: string): void {
     this.currentDifficulty = this.difficulty[difficult];
   }
-
+finishData(){
+    this.board.finishData()
+}
   setStyle(style: string): void {
     this.currentStyle = style;
   }

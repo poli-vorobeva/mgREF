@@ -9,12 +9,13 @@ import Control from "../../controll";
 
 export class Timer extends Control implements ITimer {
   timerController:ITimerController;
+  private hourString: Control<HTMLElement>;
 
   constructor(parentNode:HTMLElement) {
     super(parentNode)
     const timer= new Control(parentNode,'div', 'timer')
-    const hourString = new Control(timer.node,'div', 'timer__string','TIMER')
-    this.timerController = new TimerController(hourString.node)
+    this.hourString = new Control(timer.node,'div', 'timer__string','TIMER')
+    this.timerController = new TimerController(this.hourString.node)
     const stpBtn = new Control(timer.node,'button', 'button__stop','Stop Game')
     stpBtn.node.addEventListener('click', () => {
       this.timerController.stopTimer();
@@ -29,7 +30,8 @@ export class Timer extends Control implements ITimer {
   //   return this.timeString?.innerText as string;
   // }
 
-  stopTimer():void {
+  stopTimer():string {
+    return this.hourString.node.innerText
   //  this.timerController?.stopTimer();
   }
 }

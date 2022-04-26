@@ -1,6 +1,7 @@
 .cards__board {
   width: 400px;
   height: 400px;
+  position: relative;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 23% 23% 23% 23%;

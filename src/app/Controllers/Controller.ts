@@ -9,9 +9,14 @@ export class Controller implements IController {
   correctPairs: number;
   totalBoardPairs: number | undefined;
   onGameComplete: () => void
+  private time: string;
+  private mistakePairs: number;
   constructor() {
     this.answerValues = []
     this.correctPairs = 0
+    this.time=''
+    this.mistakePairs=0
+    this.time=''
   }
   pairsOnBoard(pairs: number): void {
     this.totalBoardPairs = pairs
@@ -30,11 +35,20 @@ export class Controller implements IController {
       return 'correct'
     } else {
       this.answerValues = []
+      this.mistakePairs+=1
       return 'mistake'
     }
   }
 
   isComplete(): boolean {
+   //
     return this.totalBoardPairs === this.correctPairs
+  }
+
+  gameTime(time: string) {
+    this.time=time
+  }
+  finishData(){
+    console.log(this.correctPairs,'##',this.mistakePairs,'@@',this.time)
   }
 }

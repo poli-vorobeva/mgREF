@@ -1,11 +1,12 @@
 import './CardItem.scss';
-import { ICardItem } from '../../../interfaces';
+import {ICardItem} from '../../../interfaces';
 import Control from "../../../controll";
 
 export class CardItem extends Control implements ICardItem {
   images: string[];
   cardsStyle: string;
   onAnswer: (cardNumber: number, card: HTMLElement) => void
+  onCheckAnswer:()=>void
   card: Control<HTMLElement>;
   backGradient: Control<HTMLElement>;
   onStartTimer: () => void;
@@ -29,17 +30,23 @@ export class CardItem extends Control implements ICardItem {
     );
     this.backGradient = new Control(back.node, 'div', 'card__back-gradient')
   }
+
   unflip() {
     this.card.node.style.transitionDelay = `unset`
     this.card.node.classList.remove('flipped');
     this.card.node.addEventListener('click', (e) => {
       this.card.node.classList.add('flipped');
+      this.card.node.ontransitionend = () => {
+        this.onCheckAnswer()
+      }
       this.onAnswer(this.number, this.card.node)
     }, false);
   }
+
   flipp(): void {
     this.card.node.classList.add('flipped')
   }
+
   answer(answerResult: string) {
     if (answerResult === 'correct') {
       this.backGradient.node.style.background = 'rgba(0,200,50,0.3)'
@@ -52,6 +59,7 @@ export class CardItem extends Control implements ICardItem {
 
     }
   }
+
   animateFunction(): Promise<CardItem> {
     return new Promise((res, rej) => {
       setTimeout(() => {
@@ -62,6 +70,7 @@ export class CardItem extends Control implements ICardItem {
     })
 
   }
+
   anitamateFadeIn(el: HTMLElement, delayIndex: number) {
     const rand = Math.floor(Math.random() * delayIndex * 10)
     el.classList.remove('animateCard')

@@ -75,6 +75,7 @@ export class App extends Control implements IApp {
         gameField.onGameComplete = () => {
           //  this.onGameComplete()
           setTimeout(() => {
+            console.log(gameField.finishData())
             gameField.destroy()
             new Score(this.mainContainer.node)
           }, 500)

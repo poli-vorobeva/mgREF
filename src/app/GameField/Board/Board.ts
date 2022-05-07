@@ -6,7 +6,7 @@ import {Modal} from './Modal/Modal';
 import Control from '../../controll';
 
 function shuffleArray(_array: number[]): number[] {
-  const array=_array.slice()
+  const array = _array.slice()
 
   for (let i = array.length - 1; i > 0; i--) {
     const j: number = Math.floor(Math.random() * (i + 1));
@@ -39,14 +39,14 @@ export class Board extends Control implements IBoard {
     this.diffStr = difficultyString
     this.difficultKoef = 1;
     this.imagesArr = [];
-    this.answerStatus=''
+    this.answerStatus = ''
     this.controller = new Controller();
     this.controller.onGameComplete = () => {
       this.onGameComplete()
     }
     this.cardsToCheck = [];
     this.cardsElement = null;
-    this.imagesArr=this.getImagesArray(+difficulty);
+    this.imagesArr = this.getImagesArray(+difficulty);
     const cards = this.createCardsBoard(parentNode,
       this.imagesArr, cardsStyle, difficulty);
   }
@@ -66,15 +66,15 @@ export class Board extends Control implements IBoard {
     cardI.onAnswer = (cardIndex, card: HTMLElement) => {
       this.cardsToCheck.push(cardI)
       const answer = this.controller.answer(cardIndex)
-      this.answerStatus=answer
-      if(this.answerStatus=='correct' || this.answerStatus=='mistake'){
-        this.disableClickBlock=new Control(this.cardsHTMLWrapper.node,'div',
+      this.answerStatus = answer
+      if (this.answerStatus == 'correct' || this.answerStatus == 'mistake') {
+        this.disableClickBlock = new Control(this.cardsHTMLWrapper.node, 'div',
           'disableClick')
       }
     }
-    cardI.onCheckAnswer=()=>{
-     if (this.answerStatus === 'correct' || this.answerStatus === 'mistake') {
-       this.disableClickBlock.destroy()
+    cardI.onCheckAnswer = () => {
+      if (this.answerStatus === 'correct' || this.answerStatus === 'mistake') {
+        this.disableClickBlock.destroy()
         this.cardsToCheck.forEach(card => {
           card.answer(this.answerStatus)
         })
@@ -93,34 +93,33 @@ export class Board extends Control implements IBoard {
                    difficult: number) {
     this.cardsHTMLWrapper = new Control(this.node, 'div', `cards__board ${this.diffStr}`);
     Promise.all(numbersArray.map((el, i) => this.cardItem(this.cardsHTMLWrapper.node, style, i, numbersArray))).then((data) => {
-      data.forEach(el => el.flipp())
-      setTimeout(() => {
-        data.forEach(el => {
-          el.unflip()
-          this.onStartTimer()
-        })
-      }, 3500)
+      const isFlipped= Promise.all(data.map(el => el.flipp()))
+      isFlipped.then(d=> {
+        setTimeout(() => {
+          Promise.all(data.map(el => el.unflip())).then(e=> this.onStartTimer())
+        }, 3500)
+      })
     })
   }
 
-  getImagesArray(number: number): number[]{
+  getImagesArray(number: number): number[] {
     this.pairsOnBoard = number ** 2 / 2;
     this.controller.pairsOnBoard(this.pairsOnBoard)
     const newArrayOfNumbers = new Array(this.pairsOnBoard * 2)
-    this.imagesArr=this.numbersAr(this.pairsOnBoard,5)
-    const shufFirst=shuffleArray(this.imagesArr);
+
+    this.imagesArr = this.numbersAr(this.pairsOnBoard, 5)
+    const shufFirst = shuffleArray(this.imagesArr);
     const shufSecond = shuffleArray(this.imagesArr);
-   return [...shufFirst,...shufSecond]
+    return [...shufFirst, ...shufSecond]
   }
 
   numbersAr(pairs: number, imagesCount: number) {
     const newAr = []
+    let currentIndex = 0
     for (let i = 0; i < this.pairsOnBoard; i++) {
-      if (i <= imagesCount) {
-        newAr.push(i)
-      }else{
-        newAr.push(i-imagesCount)
-      }
+      if (currentIndex > imagesCount) currentIndex = 0
+      newAr.push(currentIndex)
+      currentIndex++
     }
     return newAr
   }

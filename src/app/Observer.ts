@@ -19,8 +19,7 @@ class Observer implements IObserver {
 
   addListener(name: string, callback: () => any):any {
     const id = {};
-    console.log(id, typeof id);
-    this.listeners.push({ id, name, callback });
+   this.listeners.push({ id, name, callback });
     return id;
   }
 

@@ -2,6 +2,7 @@
 import {
   IBoard, IController, IGameField, IMatches,
 } from '../interfaces';
+import {LocalStorage} from "../LocalStorage";
 
 export class Controller implements IController {
 
@@ -50,5 +51,7 @@ export class Controller implements IController {
   }
   finishData(){
     console.log(this.correctPairs,'##',this.mistakePairs,'@@',this.time)
+    const local = new LocalStorage()
+    local.setValues()
   }
 }

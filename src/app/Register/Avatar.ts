@@ -28,7 +28,6 @@ this.onGetAvatar(src)
     const inputLoad = new Control(plusEl.node,'input', 'register__load-input')
     inputLoad.node.setAttribute('type', 'file');
     inputLoad.node.addEventListener('change',(e) => {
-      console.log(e)
       this.downloadImage.download(e as Event, avatar.node);
     },false);
 

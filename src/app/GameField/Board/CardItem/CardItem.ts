@@ -43,8 +43,14 @@ export class CardItem extends Control implements ICardItem {
     }, false);
   }
 
-  flipp(): void {
-    this.card.node.classList.add('flipped')
+  flipp(): Promise<unknown> {
+    return new Promise((res,rej)=>{
+      this.card.node.classList.add('flipped')
+      this.card.node.ontransitionend=()=>{
+        return res(null)
+      }
+    })
+
   }
 
   answer(answerResult: string) {

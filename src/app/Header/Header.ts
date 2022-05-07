@@ -19,7 +19,6 @@ export class Header extends Control {
     this.navWrapper = undefined;
     this.gameBtn = undefined;
     this.observer = observer;
-    console.log("HEADER")
     const button = new Control(this.node,'button', 'button__game game')
     const buttonContent = new Control(button.node,'span','','Match Game')
     buttonContent.node.setAttribute('data-hash', '#game');

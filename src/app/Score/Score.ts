@@ -1,22 +1,25 @@
 import './Score.scss';
-import {storage} from '../Storage/Storage';
+import {GameResult, storage} from '../Storage/Storage';
 import {IHelper, IScore} from '../interfaces';
 import Control from "../controll";
 
 export class Score extends Control implements IScore {
   parent: HTMLElement | undefined;
+  private results: GameResult[]
 
-  constructor(parentNode: HTMLElement) {
+  constructor(parentNode: HTMLElement,results:GameResult[]) {
     super(parentNode)
+    this.results=results
+    console.log('###',this.results)
     this.parent = undefined;
     this.render()
   }
 
   async drawScoreContent(parent: HTMLElement) {
-    const storageData = await storage.getResults();
-    const sortedData = storageData.sort((a, b) => a.score - b.score);
+   // const storageData = await storage.getResults();
+   // const sortedData = storageData.sort((a, b) => a.score - b.score);
     const div = new Control(parent, 'section', 'score__content');
-    sortedData.forEach((man) => {
+    this.results.forEach((man) => {
       const divM = new Control(div.node, 'div', 'score__item')
       const e = JSON.parse(JSON.stringify(man));
       const avatar = new Control(divM.node, 'div', 'score__avatar')

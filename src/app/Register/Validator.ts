@@ -1,7 +1,7 @@
 import {IRegister, IValidator} from '../interfaces';
 import {observer} from '../Observer';
 import {hashEl} from '../Hash';
-import {LocalStorage} from '../LocalStorage';
+//import {LocalStorage} from '../LocalStorage';
 
 export class Validator implements IValidator {
   emailPattern: RegExp;

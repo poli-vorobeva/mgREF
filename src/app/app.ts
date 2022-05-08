@@ -11,7 +11,7 @@ import {
   IGameField,
   IRegister,
 } from './interfaces';
-import {GameStorage, IdbStorage} from './Storage/Storage';
+import {GameStorage, IdbStorage, User} from './Storage/Storage';
 import {GameField} from './GameField/GameField';
 import {observer} from './Observer';
 import Control from "./controll";
@@ -23,9 +23,10 @@ export class App extends Control implements IApp {
   mainContainer: Control<HTMLElement>;
   parentNode: HTMLElement;
   currentSettings: Record<string, string>;
-
+userData:User
   constructor(parentNode: HTMLElement) {
     super(parentNode)
+    this.userData=JSON.parse(window.localStorage.getItem('user'))
     this.parentNode = parentNode
     this.header = new Header(parentNode);
     this.mainContainer = new Control(parentNode, 'main', 'main')
@@ -55,7 +56,10 @@ export class App extends Control implements IApp {
       case '#score':
         this.mainContainer.destroy()
         this.mainContainer = new Control(this.parentNode, 'main', 'main')
-        return new Score(this.mainContainer.node);
+        const storageResults=this.storage.getResults()
+        storageResults.then(data=>{
+          return new Score(this.mainContainer.node,data);
+        })
       case '#settings':
         this.mainContainer.destroy()
         this.mainContainer = new Control(this.parentNode, 'main', 'main')
@@ -67,17 +71,26 @@ export class App extends Control implements IApp {
       case '#register':
         this.mainContainer.destroy()
         this.mainContainer = new Control(this.parentNode, 'main', 'main')
-        return new RegisterForm(this.mainContainer.node)
+        const registerForm = new RegisterForm(this.mainContainer.node)
+        registerForm.onNewUserData=(user)=>{
+          this.userData=user
+          window.localStorage.setItem('user',JSON.stringify(this.userData))
+        }
+        return registerForm
       case '#game':
         this.mainContainer.destroy()
         this.mainContainer = new Control(this.parentNode, 'main', 'main')
         const gameField = new GameField(this.mainContainer.node, this.currentSettings);
-        gameField.onGameComplete = () => {
+        gameField.onGameComplete = async () => {
           //  this.onGameComplete()
+          const result = gameField.finishData()
+          console.log(result)
+          console.log(this.userData)
+          await this.storage.saveResult(  {user:this.userData,score:result})
+          const results=await this.storage.getResults()
           setTimeout(() => {
-            console.log(gameField.finishData())
             gameField.destroy()
-            new Score(this.mainContainer.node)
+            const scorePage = new Score(this.mainContainer.node,results)
           }, 500)
 
         }

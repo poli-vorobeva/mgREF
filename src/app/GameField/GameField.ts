@@ -9,7 +9,7 @@ export class GameField extends Control implements IGameField {
   difficulty: { [key: string]: number };
   currentDifficulty: number;
   currentStyle: string;
-  onGameComplete: () => void
+  onGameComplete: () => Promise<void>
   private board: Board;
 
   constructor(parentNode: HTMLElement, settings: Record<string, string>) {
@@ -39,7 +39,7 @@ export class GameField extends Control implements IGameField {
   }
 
   finishData() {
-    this.board.finishData()
+    return this.board.finishData()
   }
 
   setStyle(style: string): void {

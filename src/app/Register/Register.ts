@@ -6,16 +6,8 @@ import {RegisterFields} from './RegisterFields';
 import Control from "../controll";
 import { hashEl } from '../Hash';
 import { observer } from '../Observer';
-class LocalStorageData{
-  constructor(){
+import {User} from "../Storage/Storage";
 
-  }
-  setItem(data:Record<string, string>){
-    Object.entries(data).forEach(d=>{
-      localStorage.setItem(d[0],d[1])
-    })
-  }
-}
 export class RegisterForm extends Control {
 
   formInputs: HTMLElement[];
@@ -24,15 +16,15 @@ export class RegisterForm extends Control {
 
   errorDiv: HTMLElement | undefined | null;
 
-  inputsData: Record <string,string>;
-
+  inputsData: User
+  onNewUserData:(user:User)=>void
   constructor(parentNode: HTMLElement) {
     super(parentNode)
     this.inputsData={
       firstName:'',
       lastName:'',
       email:'',
-      imageSrc:''
+      photo:''
     }
     this.formInputs = [];
     const errDiv = new Control(parentNode,'div',
@@ -41,7 +33,7 @@ export class RegisterForm extends Control {
     const registerWrapper = new Control(this.node, 'section', 'register__wrapper')
     const form = new Control(registerWrapper.node, 'form', 'register__form')
       form.node.addEventListener('submit',(e) => {
-          new LocalStorageData().setItem(this.inputsData)
+        this.onNewUserData(this.inputsData)
         hashEl.setHash();
         observer.dispatch('hash');
       },false);
@@ -56,11 +48,11 @@ export class RegisterForm extends Control {
       }
     }
     fields.sendData=(data)=>{
-      this.inputsData[data.id]=data.value
+      this.inputsData[data.id as keyof User]=data.value
     }
     const avatar = new RegisterAvatar(form.node);
     avatar.onGetAvatar = (src) => {
-      this.inputsData.imageSrc = src
+      this.inputsData.photo = src
     }
   }
 }

@@ -129,6 +129,6 @@ export class Board extends Control implements IBoard {
   }
 
   finishData() {
-    this.controller.finishData()
+    return this.controller.finishData(+this.diffStr)
   }
 }

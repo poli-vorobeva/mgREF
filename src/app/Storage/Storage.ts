@@ -71,8 +71,9 @@ export class IdbStorage implements GameStorage {
   }
 
   saveResult(result: GameResult): Promise<void> {
+    console.log(result,'$$$')
     return this.performQuery((store) => {
-      store.add(result, result.score);
+      store.add(result, ''+result.score);
     });
   }
 
@@ -86,13 +87,17 @@ export class IdbStorage implements GameStorage {
 
     let result: T;
     try {
+      console.log("1")
       const transaction = database.transaction(tableName, 'readwrite');
       const objectStore = transaction.objectStore(tableName);
       result = await executeQuery(objectStore);
       await new Promise((resolve, reject) => {
+        console.log("2")
         transaction.oncomplete = resolve;
         transaction.onerror = reject;
       });
+    }catch(e){
+      console.log('e',e)
     } finally {
       database.close();
     }

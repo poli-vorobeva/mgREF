@@ -2,16 +2,18 @@ import './Score.scss';
 import {GameResult, storage} from '../Storage/Storage';
 import {IHelper, IScore} from '../interfaces';
 import Control from "../controll";
+import {ScoreItem} from "./ScoreItem";
 
 export class Score extends Control implements IScore {
   parent: HTMLElement | undefined;
   private results: GameResult[]
 
   constructor(parentNode: HTMLElement,results:GameResult[]) {
-    super(parentNode)
+    super(parentNode,'div', 'score__wrapper')
     this.results=results
-    console.log('###',this.results)
     this.parent = undefined;
+    const h3 = new Control(this.node, 'h3', 'score__h3', 'Score')
+
     this.render()
   }
 
@@ -19,21 +21,13 @@ export class Score extends Control implements IScore {
    // const storageData = await storage.getResults();
    // const sortedData = storageData.sort((a, b) => a.score - b.score);
     const div = new Control(parent, 'section', 'score__content');
-    this.results.forEach((man) => {
-      const divM = new Control(div.node, 'div', 'score__item')
-      const e = JSON.parse(JSON.stringify(man));
-      const avatar = new Control(divM.node, 'div', 'score__avatar')
-      const img = new Control(avatar.node, 'img')
-      img.node.setAttribute('src', e.user.photo);
-      const divW = new Control(divM.node, 'div', 'score__subWrapper')
-      const name = new Control(divW.node, 'h4', 'score__name', e.user.firstName)
-      const score = new Control(divM.node, 'div', 'score__score', `${e.score}`)
+   const sortedData = this.results.sort((a,b)=>b.score-a.score)
+   sortedData.forEach((man) => {
+      const item = new ScoreItem(div.node,man)
     });
   }
 
   async render(): Promise<void> {
-    const wrapper = new Control(this.node, 'div', 'score__wrapper')
-    const h3 = new Control(wrapper.node, 'h3', 'score__h3', 'Score')
-    await this.drawScoreContent(wrapper.node);
+    await this.drawScoreContent(this.node);
   }
 }

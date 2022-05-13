@@ -48,6 +48,7 @@ userData:User
 
   async initMainContent(hash = this.hashDefault): Promise<Control<HTMLElement>> {
     const h = hash || window.location.hash;
+    console.log("HHHH",h)
     switch (h) {
       case '#info':
         this.mainContainer.destroy()
@@ -57,7 +58,7 @@ userData:User
         this.mainContainer.destroy()
         this.mainContainer = new Control(this.parentNode, 'main', 'main')
         const storageResults=this.storage.getResults()
-        storageResults.then(data=>{
+        return storageResults.then(data=>{
           return new Score(this.mainContainer.node,data);
         })
       case '#settings':
@@ -84,9 +85,7 @@ userData:User
         gameField.onGameComplete = async () => {
           //  this.onGameComplete()
           const result = gameField.finishData()
-          console.log(result)
-          console.log(this.userData)
-          await this.storage.saveResult(  {user:this.userData,score:result})
+         await this.storage.saveResult(  {user:this.userData,score:result})
           const results=await this.storage.getResults()
           setTimeout(() => {
             gameField.destroy()

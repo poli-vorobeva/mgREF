@@ -22,27 +22,22 @@ export class Header extends Control {
     const button = new Control(this.node,'button', 'button__game game')
     const buttonContent = new Control(button.node,'span','','Match Game')
     buttonContent.node.setAttribute('data-hash', '#game');
-    buttonContent.node.onclick=() => {
-      hashEl.setHash('#game');
+    const navClickHash=(hash:string)=>{
+      hashEl.setHash(hash);
       observer.dispatch('hash');
     }
+    buttonContent.node.onclick=() => navClickHash('#game')
     const ul = new Control(this.node,'ul','nav__items')
     for (let i = 0; i < this.navItems.length; i++) {
       const li = new Control(ul.node,'li',`nav__item ${this.navItems[i].name}`)
       const span = new Control(li.node,'span')
       const title = new Control(li.node,'span', 'nav__title',this.navItems[i].name)
       li.node.setAttribute('data-hash', this.navItems[i].name);
-      li.node.onclick=() => {
-        hashEl.setHash(this.navItems[i].name);
-        this.observer.dispatch('hash');
-      }
+      li.node.onclick=() => navClickHash(this.navItems[i].name)
     }
     const buttonRegister = new Control(this.node,'button', 'button__register register')
     const buttonText = new Control(buttonRegister.node,'span','','Register New Player');
-    buttonRegister.node.onclick= () => {
-      hashEl.setHash('#register');
-      observer.dispatch('hash');
-    };
+    buttonRegister.node.onclick= () => navClickHash('#register')
     observer.addListener('avatar', () => {
       if (window.localStorage.photo) {
         const img= new Control(this.node,'img','header__avatar')

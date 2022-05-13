@@ -1,14 +1,26 @@
 .score__item {
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   width: 100%;
   justify-content: space-around;
   margin-bottom: 20px;
+  padding-bottom: 10px;
   h4,
   p {
     margin: 0;
   }
+}
+.score__item::after{
+  position: absolute;
+  bottom: 0;
+  content:'';
+  width:80%;
+  height: 1px;
+  background: #a54362;;
+  margin: 0 auto;
+
 }
 .score__wrapper {
   width: 100%;
